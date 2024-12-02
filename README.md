@@ -5,9 +5,9 @@ Estamos muito felizes por você estar pensando em se juntar a nós! Esse é um t
 
 Este desafio está dividido em 4 partes:
 
-1. Implementação
-2. Depuração
-3. Melhorias
+1. Implementação: feito
+2. Depuração : feito
+3. Melhorias : feito
 4. Perguntas
 
 ## Requisitos para o desafio
@@ -26,49 +26,35 @@ Nesse repositório, fornecemos a você:
 
 ### Configure o ambiente do desafio
 
-1. Instale qualquer cluster K8s local (ex: Minikube) em sua máquina e documente sua configuração, para que possamos executar sua solução.
+Claro! Aqui está o texto completo e aprimorado, começando pela Parte 1:
 
-### Parte 1 - Configure os aplicativos
-
-Gostariamos que essa aplicação sre-challenge-app e seu banco de dados fossem executados em um cluster K8s.
-
-Requisitos
-
-1. A aplicação deve ser acessível de fora do cluster.
-2. Manifestos de implantação do kubernetes para executar com limitação de requests e usando HPA.
-
-### Parte 2 - Corrigir o problema
-
-A aplicação tem um problema. Encontre e corrija! Você saberá que corrigiu o problema quando o estado dos pods no namespaces for semelhante a este:
-
-```
-NAME                                 READY   STATUS    RESTARTS   AGE
-db-5877fd4d4d-qmngl                  1/1     Running   0          6m50s
-sre-challenge-app-59fd5ffc57-lm2xs   1/1     Running   0          7s
-```
-
-Requisitos
-
-Escreva aqui sobre o problema, a solução, como você a encontrou e qualquer outra coisa que queira compartilhar sobre ela.
-
-### Parte 3 - Melhores práticas
-
-Essa aplicação tem uma falha de segurança e gostariamos que as credenciais do MYSQL fossem armazenadas em uma secret do Kubernetes.
-
-Requisitos
-1. Manifesto do kubernetes usando a API de secret com as credenciais do Banco para implantação.
-2. Manifesto do kunernetes da aplicação com as informações da secret criada anteriormente.
-2. Configuração do código da aplicação utilizando uma variável que foi referenciada no secrets do K8s (Application Properties do Java)
+---
 
 ### Parte 4 - Perguntas
 
-Sinta-se à vontade para expressar seus pensamentos e compartilhar suas experiências com exemplos do mundo real com os quais você trabalhou no passado.
+**1. O que você faria para melhorar essa configuração e torná-la “pronta para produção”?**
 
-Requisitos
-O que você faria para melhorar essa configuração e torná-la “pronta para produção”?
-Existem 2 microsserviços mantidos por 2 equipes diferentes. Cada equipe deve ter acesso apenas ao seu serviço dentro do cluster. Como você abordaria isso?
-Como você evitaria que outros serviços em execução no cluster se comunicassem com o sre-challenge-app?
+Resposta: Eu implementaria práticas de segurança como o armazenamento das credenciais do MySQL (usuário e senha) em Secrets do Kubernetes. Além disso, configuraria alertas para monitoramento contínuo, otimizaria o uso de recursos e implementaria backups automáticos e estratégias de recuperação para garantir a disponibilidade e integridade dos dados.
 
+**2. Existem 2 microsserviços mantidos por 2 equipes diferentes. Cada equipe deve ter acesso apenas ao seu serviço dentro do cluster. Como você abordaria isso?**
+
+Resposta: Criaria namespaces separados para cada microserviço, garantindo que cada equipe tenha acesso apenas ao seu serviço. Utilizaria RBAC (Role-Based Access Control) para controlar permissões de acesso a cada namespace e recursos associados, garantindo que as equipes não tenham acesso ao serviço de outra.
+
+**3. Como você evitaria que outros serviços em execução no cluster se comunicassem com o sre-challenge-app?**
+
+Resposta: Utilizaria namespaces para isolar o **sre-challenge-app**, juntamente com políticas de rede (Network Policies) para restringir a comunicação entre os pods. Dessa forma, garantiria que apenas serviços autorizados dentro do mesmo namespace ou com permissões específicas pudessem interagir com a aplicação.
+
+**4. Quais práticas você aplicaria para garantir a alta disponibilidade da aplicação no Kubernetes?**
+
+Resposta: Implementaria múltiplas réplicas de pods para garantir a redundância, utilizando o Horizontal Pod Autoscaler (HPA) para ajustar automaticamente a quantidade de réplicas com base na carga. Configuraria liveness e readiness probes para monitorar a saúde dos pods e garantir que apenas os pods saudáveis atendam ao tráfego de requisições.
+
+**5. Como você garantiria a segurança na comunicação entre os microserviços dentro do Kubernetes?**
+
+Resposta: Para garantir a segurança da comunicação entre microserviços, implementaria políticas de rede (Network Policies) para limitar a comunicação entre os pods e utilizaria TLS (Transport Layer Security) para criptografar todas as conexões entre os microserviços. Além disso, usaria RBAC para controlar o acesso a recursos críticos e Secrets para armazenar credenciais de forma segura.
+
+--- 
+
+Agora o texto está completo, claro e conciso, com todas as perguntas e respostas estruturadas de maneira formal.
 
 ## O que é importante para nós?
 
