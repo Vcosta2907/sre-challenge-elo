@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      initContainers:
+        - name: init-wait-db
+          image: busybox
+          command:
+            - sh
+            - -c
+            - >
+              until nc -z -v -w30 db 3306;
+              do echo "Esperando pelo banco de dados..."; sleep 5; done;
+      containers:
+        - name: web
+          image: viniciusferreirac/vinicius-elo
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dbsenha
+                  key: dbsenha
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
