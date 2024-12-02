@@ -1,0 +1,26 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: sre-challenge-elo
+deploy:
+  kubectl:
+    flags:
+      global: []
+build:
+ tagPolicy: 
+  inputDigest: {}
+ artifacts:
+  - image: viniciusferreirac/vinicius-elo
+    docker:
+     dockerfile: Dockerfile
+ local: 
+   concurrency: 1
+   tryImportMissing: true
+   useDockerCLI: false
+manifests: 
+  rawYaml:
+    #- k8s/namespace.yml
+    - k8s/database/db.deployment.yml
+    - k8s/database/db.services.yml
+    - k8s/web/web.services.yml
+    - k8s/web/web.deployment.yml
