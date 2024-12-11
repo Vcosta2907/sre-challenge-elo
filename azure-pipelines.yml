@@ -1,0 +1,34 @@
+# Define o gatilho do pipeline, para executar automaticamente quando houver mudanças na branch 'main'.
+trigger:
+- main
+
+# Define os repositórios usados no pipeline. 'self' refere-se ao repositório atual.
+resources:
+- repo: self
+
+# Declara variáveis que serão usadas no pipeline.
+variables:
+  tag: '$(Build.BuildId)' # A tag da imagem será baseada no ID do build, gerando um valor único para cada execução.
+
+# Define os estágios do pipeline.
+stages:
+- stage: Build # Nome do estágio principal.
+  displayName: Build and Push Docker Image # Nome exibido no Azure DevOps.
+  jobs:
+  - job: Build # Define o job dentro do estágio.
+    displayName: Build and Push # Nome do job exibido no Azure DevOps.
+    pool:
+      vmImage: ubuntu-latest # Define o ambiente como uma máquina virtual Linux com Ubuntu.
+
+    # Define as etapas (steps) do job.
+    steps:
+    - task: Docker@2 # Usa a task Docker@2, nativa do Azure DevOps para trabalhar com Docker.
+      displayName: Build and Push Docker Image # Nome exibido para esta etapa.
+      inputs:
+        containerRegistry: '<NomeDaConexaoDoRegistro>' # Nome da conexão com o registro de contêiner.
+        repository: '<NomeDoRepositorio>' # Nome do repositório no registro (ex.: meuapp/backend).
+        command: buildAndPush # Especifica que o comando fará o build e o push da imagem.
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile' # Caminho do Dockerfile no repositório.
+        tags: | 
+          $(tag) # Tag única baseada no ID do build.
+          latest # Adiciona a tag 'latest' à imagem.
