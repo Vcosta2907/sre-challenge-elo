@@ -25,8 +25,8 @@ stages:
     - task: Docker@2 # Usa a task Docker@2, nativa do Azure DevOps para trabalhar com Docker.
       displayName: Build and Push Docker Image # Nome exibido para esta etapa.
       inputs:
-        containerRegistry: '<NomeDaConexaoDoRegistro>' # Nome da conexão com o registro de contêiner.
-        repository: '<NomeDoRepositorio>' # Nome do repositório no registro (ex.: meuapp/backend).
+        containerRegistry: 'github-service-connection' # Nome da conexão com o registro de contêiner.
+        repository: 'vcosta2907/sre-challenge-elo' # Nome do repositório no registro (ex.: meuapp/backend).
         command: buildAndPush # Especifica que o comando fará o build e o push da imagem.
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile' # Caminho do Dockerfile no repositório.
         tags: | 
